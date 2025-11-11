@@ -43,7 +43,7 @@ final class HolderController extends AbstractController
                 ];
 
                 $account = new Account();
-                $account->setNickname("Someone's " . $type->name . " Account");
+                $account->setNickname($holder->getName() . "'s " . $type->name . " Account");
                 $account->setAccountType($type->value);
                 $account->setHolder($holder);
                 $entityManager->persist($account);
