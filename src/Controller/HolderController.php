@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Holder;
 use App\Entity\Account;
 use App\Form\HolderType;
@@ -32,6 +33,14 @@ final class HolderController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $age = $holder->getBirthDate()
+                ->diff(new DateTime('now'))
+                ->y;
+            $rate = $age / 2;
+
+            $holder->setAge($age);
+            $holder->setRate($rate);
+
             $entityManager->persist($holder);
             $entityManager->flush();
 
@@ -74,6 +83,14 @@ final class HolderController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $age = $holder->getBirthDate()
+                ->diff(new DateTime('now'))
+                ->y;
+            $rate = $age / 2;
+
+            $holder->setAge($age);
+            $holder->setRate($rate);
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_holder_index', [], Response::HTTP_SEE_OTHER);

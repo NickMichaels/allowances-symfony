@@ -14,8 +14,6 @@ class HolderType extends AbstractType
         $builder
             ->add('name')
             ->add('birthdate')
-            ->add('age')
-            ->add('rate')
             ->add('spend_percent')
             ->add('save_percent')
             ->add('give_percent')
