@@ -3,13 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Holder;
+use App\Entity\Account;
 use App\Form\HolderType;
+use App\Enum\TransactionType;
 use App\Repository\HolderRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/holder')]
 final class HolderController extends AbstractController
@@ -32,6 +34,21 @@ final class HolderController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($holder);
             $entityManager->flush();
+
+            // Create accounts, yes this should be done in a listener but... time
+            foreach (TransactionType::cases() as $type) {
+                $types[] = [
+                    'name' => $type->name,  // The name of the case (e.g., 'ADMIN')
+                    'value' => $type->value // The backed value of the case (e.g., 'ROLE_ADMIN')
+                ];
+
+                $account = new Account();
+                $account->setNickname("Someone's " . $type->name . " Account");
+                $account->setAccountType($type->value);
+                $account->setHolder($holder);
+                $entityManager->persist($account);
+                $entityManager->flush();
+            }
 
             return $this->redirectToRoute('app_holder_index', [], Response::HTTP_SEE_OTHER);
         }
