@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Holder{% endblock %}
+
+{% block body %}
+    <h1>Edit Holder</h1>
+
+    {{ include('holder/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_holder_index') }}">back to list</a>
+
+    {{ include('holder/_delete_form.html.twig') }}
+{% endblock %}

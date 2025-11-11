@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Holder index{% endblock %}
+
+{% block body %}
+    <h1>Holder index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Birthdate</th>
+                <th>Age</th>
+                <th>Rate</th>
+                <th>Spend_percent</th>
+                <th>Save_percent</th>
+                <th>Give_percent</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for holder in holders %}
+            <tr>
+                <td>{{ holder.id }}</td>
+                <td>{{ holder.name }}</td>
+                <td>{{ holder.birthdate ? holder.birthdate|date('Y-m-d') : '' }}</td>
+                <td>{{ holder.age }}</td>
+                <td>{{ holder.rate }}</td>
+                <td>{{ holder.spendPercent }}</td>
+                <td>{{ holder.savePercent }}</td>
+                <td>{{ holder.givePercent }}</td>
+                <td>
+                    <a href="{{ path('app_holder_show', {'id': holder.id}) }}">show</a>
+                    <a href="{{ path('app_holder_edit', {'id': holder.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_holder_new') }}">Create new</a>
+{% endblock %}
