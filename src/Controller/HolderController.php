@@ -6,6 +6,7 @@ use DateTime;
 use App\Entity\Holder;
 use App\Entity\Account;
 use App\Form\HolderType;
+use App\Enum\AccountType;
 use App\Enum\TransactionType;
 use App\Repository\HolderRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -45,7 +46,7 @@ final class HolderController extends AbstractController
             $entityManager->flush();
 
             // Create accounts, yes this should be done in a listener but... time
-            foreach (TransactionType::cases() as $type) {
+            foreach (AccountType::cases() as $type) {
                 $types[] = [
                     'name' => $type->name,  // The name of the case (e.g., 'ADMIN')
                     'value' => $type->value // The backed value of the case (e.g., 'ROLE_ADMIN')

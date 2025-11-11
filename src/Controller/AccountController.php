@@ -50,6 +50,7 @@ final class AccountController extends AbstractController
         return $this->render('account/show.html.twig', [
             'account' => $account,
             'holder' => $account->getHolder(),
+            'transactions' => $account->getTransactions(),
         ]);
     }
 
