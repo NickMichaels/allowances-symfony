@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: HolderRepository::class)]
 class Holder
@@ -29,12 +30,24 @@ class Holder
     private ?string $rate = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
+    #[Assert\Expression(
+        "this.getSpendPercent() + this.getSavePercent() + this.getGivePercent() == 100",
+        message: 'The sum of Spend, Save and Give Percents must equal exactly 100',
+    )]
     private ?string $spend_percent = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
+    #[Assert\Expression(
+        "this.getSpendPercent() + this.getSavePercent() + this.getGivePercent() == 100",
+        message: 'The sum of Spend, Save and Give Percents must equal exactly 100',
+    )]
     private ?string $save_percent = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
+    #[Assert\Expression(
+        "this.getSpendPercent() + this.getSavePercent() + this.getGivePercent() == 100",
+        message: 'The sum of Spend, Save and Give Percents must equal exactly 100',
+    )]
     private ?string $give_percent = null;
 
     /**
